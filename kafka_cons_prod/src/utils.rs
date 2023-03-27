@@ -6,7 +6,7 @@ use std::io::BufRead;
 use std::io::BufReader;
 use std::ops::Index;
 
-fn get_parameters() -> Result<(String, ClientConfig), Box<dyn std::error::Error>> {
+pub fn get_kafka_config() -> Result<(String, ClientConfig), Box<dyn std::error::Error>> {
   let app = App::new("rust kafka cli")
             .version(option_env!("CARGO_PKG_VERSION").unwrap_or(""))
             .arg(
@@ -30,8 +30,10 @@ fn get_parameters() -> Result<(String, ClientConfig), Box<dyn std::error::Error>
   let file = File::open(app.value_of("config").ok_or("error parsing config")?)?;
   let reader = BufReader::new(&file);
   for line in reader.lines(){
-    let curr_line = line?.trim().to_string();
+    let curr_line = line.unwrap().trim().to_string();
     let key_value: Vec<&str> = curr_line.split("=").collect();
+    println!("Key we are setting is {}",key_value.index(0).to_string());
+    println!("value we are setting is {}",key_value.index(1).to_string());
     clientConfig.set(key_value.index(0).to_string(), key_value.index(1).to_string());
   }
 
