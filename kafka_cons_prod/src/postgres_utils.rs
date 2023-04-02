@@ -12,6 +12,12 @@ pub struct Person {
   country: String
 }
 
+impl Default for Person {
+    fn default() -> Self {
+        Self { id: 0, name: String::from(""), state: String::from(""), country: String::from("") }
+    }
+}
+
 pub async fn read_sql_data_person() -> Result<Vec<Person>, Box<dyn std::error::Error>> {
   println!("Connection to the database");
   let (client, connection) =
