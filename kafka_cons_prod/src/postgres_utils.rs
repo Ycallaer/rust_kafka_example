@@ -22,12 +22,14 @@ pub async fn read_sql_data_person() -> Result<Vec<Person>, Box<dyn std::error::E
   println!("Connection to the database");
   let (client, connection) =
         tokio_postgres::connect("host=localhost user=postgres port=54320 dbname=postgres", NoTls).await?;
-  println!("Connection is a success");
   let mut persons : Vec<Person> = Vec::new();
 
   tokio::spawn(async move {
     if let Err(e) = connection.await {
         eprintln!("connection error: {}", e);
+    }
+    else{
+      println!("Connection is successful")
     }
 });
 
