@@ -32,7 +32,7 @@ pub async fn read_sql_data_person() -> Result<Vec<Person>, Box<dyn std::error::E
 });
 
   for row in client.query("SELECT id,name,state,country FROM dataprocessor", &[]).await? {
-    println!("Found a record");
+    println!("Found a record {:#?}",row);
     let mut person = Person {
       id: row.get(0),
       name: row.get(1),
