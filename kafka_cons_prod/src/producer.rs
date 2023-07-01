@@ -2,6 +2,7 @@ use rdkafka::producer::{FutureProducer, FutureRecord};
 use std::{time::Duration};
 use rdkafka::message::{Header, OwnedHeaders};
 
+
 #[macro_use] extern crate serde_derive;
 use postgres_utils::read_sql_data_person;
 
