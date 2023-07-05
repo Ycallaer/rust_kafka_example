@@ -1,7 +1,6 @@
 
 use std::convert::identity;
 
-use rdkafka::producer;
 use tokio_postgres::{NoTls, Error};
 extern crate serde;
 extern crate serde_json;
@@ -30,7 +29,7 @@ impl Default for Person {
     }
 }
 
-pub async fn read_sql_data_person() -> Result<Vec<Person>, Box<dyn std::error::Error>> {
+pub async fn read_sql_data_person() -> Result<(Vec<Person>, Vec<identity::Identity>), Box<dyn std::error::Error>> {
   println!("Connection to the database");
   let (client, connection) =
         tokio_postgres::connect("host=localhost user=postgres port=54320 dbname=postgres", NoTls).await?;
@@ -68,6 +67,6 @@ pub async fn read_sql_data_person() -> Result<Vec<Person>, Box<dyn std::error::E
     persons_proto_vec.push(person_proto);
     
   }
-  Ok(persons)
+  Ok((persons,persons_proto_vec))
   
 }
